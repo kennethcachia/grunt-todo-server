@@ -10,41 +10,30 @@
 
 module.exports = function(grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
   grunt.registerMultiTask('todo_server', 'Grunt todo server.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+    var regex = /(TODO):(.*)/ig;
+    var src = this.data.src;
+
+    var match;
+    var raw;
+    var todos = {};
+    var key;
+
+    src.forEach(function (filename) {
+      grunt.log.writeln('Processing: ' + filename);
+
+      key = todos[filename] = [];
+      raw = grunt.file.read(filename);
+
+      while ((match = regex.exec(raw)) !== null) {
+        key.push({
+          raw: match[0],
+          prefix: match[1],
+          comment: match[2]
+        });
+      }
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
+    grunt.file.write('server/index.html', JSON.stringify(todos));
   });
-
 };
