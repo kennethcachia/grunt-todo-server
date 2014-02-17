@@ -11,49 +11,60 @@
 module.exports = function(grunt) {
 
   grunt.registerTask('todo_server_start', 'Grunt todo server - Start server', function () {
+    var options = this.options({
+      port: 9000,
+      hostname: 'localhost',
+      open: false,
+      output: 'todo_server'
+    });
+
     var connect = require('connect');
-    var middleware = [connect.static('server')];
+    var middleware = [connect.static(options.output)];
     var app = connect.apply(null, middleware);
     var http = require('http');
     var server = http.createServer(app);
     var open = require('open');
 
-    var port = 9000;
-    var hostname = 'localhost';
-    var protocol = 'http';
-
-    server.listen(port, hostname);
+    server.listen(options.port, options.hostname);
 
     server.on('listening', function () {
       var address = server.address();
-      var hostname = hostname || address.address || 'localhost';
-      var target = protocol + '://' + hostname + ':' + address.port;
+      var hostname = options.hostname || address.address || 'localhost';
+      var target = 'http://' + options.hostname + ':' + address.port;
 
       grunt.log.writeln('Started todo_server on ' + target);
-      open(target);
+
+      if (options.open) {
+        open(target);
+      }
     });
 
     server.on('error', function (err) {
       if (err.code === 'EADDRINUSE') {
-        grunt.fatal('Port ' + port + ' is already in use by another process');
+        grunt.fatal('Port ' + options.port + ' is already in use by another process');
       } else {
         grunt.fatal(err);
       }
     });
 
     this.async();
-    app.listen(port);
+    app.listen(options.port);
   });
 
 
   grunt.registerMultiTask('todo_server_extract', 'Grunt todo server - Extract todos', function () {
-    var regex = /(TODO):(.*)/ig;
     var src = this.data.src;
+
+    var options = this.options({
+      output: 'todo_server'
+    });
 
     var match;
     var raw;
     var todos = {};
     var key;
+
+    var regex = /(TODO):(.*)/ig;
 
     src.forEach(function (filename) {
       grunt.log.write('\nProcessing ' + filename + ' - ');
@@ -74,10 +85,10 @@ module.exports = function(grunt) {
 
     // Generate todos
     var output = 'var TODO_DATA = ' + JSON.stringify(todos) + ';';
-    grunt.file.write('server/todos.js', output);
+    grunt.file.write(options.output + '/todos.js', output);
 
     // Copy static files
-    grunt.file.copy('static/index.html', 'server/index.html');
-    grunt.file.copy('static/scripts.min.js', 'server/scripts.min.js');
+    grunt.file.copy('static/index.html', options.output + '/index.html');
+    grunt.file.copy('static/scripts.min.js', options.output + '/scripts.min.js');
   });
 };
