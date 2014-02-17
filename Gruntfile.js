@@ -8,7 +8,7 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   grunt.initConfig({
 
@@ -42,7 +42,11 @@ module.exports = function(grunt) {
       output: ['server']
     },
 
-    todo_server: {
+    todo_server_start: {
+      options: {}
+    },
+
+    todo_server_extract: {
       js: {
         src: ['test/fixtures/scripts.js']
       }
@@ -69,7 +73,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint:task', 'reset', 'todo_server']);
+  grunt.registerTask('default', ['jshint:task', 'reset', 'todo_server_extract']);
+  grunt.registerTask('start', ['todo_server_start']);
+
   grunt.registerTask('test', ['default', 'nodeunit']);
   grunt.registerTask('reset', ['clean']);
   grunt.registerTask('dev', ['watch']);

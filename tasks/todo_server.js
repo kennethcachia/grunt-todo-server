@@ -10,7 +10,43 @@
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('todo_server', 'Grunt todo server', function () {
+  grunt.registerTask('todo_server_start', 'Grunt todo server - Start server', function () {
+    var connect = require('connect');
+    var middleware = [connect.static('server')];
+    var app = connect.apply(null, middleware);
+    var http = require('http');
+    var server = http.createServer(app);
+    var open = require('open');
+
+    var port = 9000;
+    var hostname = 'localhost';
+    var protocol = 'http';
+
+    server.listen(port, hostname);
+
+    server.on('listening', function () {
+      var address = server.address();
+      var hostname = hostname || address.address || 'localhost';
+      var target = protocol + '://' + hostname + ':' + address.port;
+
+      grunt.log.writeln('Started todo_server on ' + target);
+      open(target);
+    });
+
+    server.on('error', function (err) {
+      if (err.code === 'EADDRINUSE') {
+        grunt.fatal('Port ' + port + ' is already in use by another process');
+      } else {
+        grunt.fatal(err);
+      }
+    });
+
+    this.async();
+    app.listen(port);
+  });
+
+
+  grunt.registerMultiTask('todo_server_extract', 'Grunt todo server - Extract todos', function () {
     var regex = /(TODO):(.*)/ig;
     var src = this.data.src;
 
