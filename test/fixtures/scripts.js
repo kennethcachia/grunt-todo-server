@@ -3,11 +3,11 @@ var a = 1;
 var b = 2;
 var c = 3;
 
-/* TODO: test */
+// TODO: Test
 
 function foo() {
   console.log(a);
 }
 
-/* TODO: 2nd */
+// TODO: Test 2
 function bar() { }
