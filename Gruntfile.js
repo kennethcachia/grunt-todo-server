@@ -11,14 +11,30 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+
+    pkg: grunt.file.readJSON('package.json'),
+
     jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>',
-      ],
       options: {
         jshintrc: '.jshintrc',
+      },
+      task: [
+        'Gruntfile.js',
+        'tasks/*.js',
+        '<%= nodeunit.tests %>'
+      ],
+      staticJs: [
+        'static/src/*.js'
+      ]
+    },
+
+    uglify: {
+      options: {
+        banner: '/* grunt-todo-server\n   <%= pkg.homepage %>\n   v<%=pkg.version %> */\n\n'
+      },
+      staticJs: {
+        src: 'static/src/*.js',
+        dest: 'static/scripts.min.js'
       }
     },
 
@@ -34,6 +50,13 @@ module.exports = function(grunt) {
 
     nodeunit: {
       tests: ['test/*.js']
+    },
+
+    watch: {
+      staticFiles: {
+        files: ['static/src/*.js'],
+        tasks: ['jshint:staticJs', 'uglify:staticJs', 'test']
+      }
     }
   });
 
@@ -41,10 +64,13 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('test', ['clean', 'todo_server', 'nodeunit']);
+  grunt.registerTask('default', ['jshint:task', 'reset', 'todo_server']);
+  grunt.registerTask('test', ['default', 'nodeunit']);
   grunt.registerTask('reset', ['clean']);
-  grunt.registerTask('default', ['todo_server']);
+  grunt.registerTask('dev', ['watch']);
 };

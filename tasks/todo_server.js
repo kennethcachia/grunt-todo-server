@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
 
-  grunt.registerMultiTask('todo_server', 'Grunt todo server.', function() {
+  grunt.registerMultiTask('todo_server', 'Grunt todo server', function () {
     var regex = /(TODO):(.*)/ig;
     var src = this.data.src;
 
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     var key;
 
     src.forEach(function (filename) {
-      grunt.log.writeln('Processing: ' + filename);
+      grunt.log.write('\nProcessing ' + filename + ' - ');
 
       key = todos[filename] = [];
       raw = grunt.file.read(filename);
@@ -28,12 +28,20 @@ module.exports = function(grunt) {
       while ((match = regex.exec(raw)) !== null) {
         key.push({
           raw: match[0],
-          prefix: match[1],
+          prefix: match[1].toLowerCase(),
           comment: match[2]
         });
       }
+
+      grunt.log.ok();
     });
 
-    grunt.file.write('server/index.html', JSON.stringify(todos));
+    // Generate todos
+    var output = 'var TODO_DATA = ' + JSON.stringify(todos) + ';';
+    grunt.file.write('server/todos.js', output);
+
+    // Copy static files
+    grunt.file.copy('static/index.html', 'server/index.html');
+    grunt.file.copy('static/scripts.min.js', 'server/scripts.min.js');
   });
 };
