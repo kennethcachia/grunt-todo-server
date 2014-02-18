@@ -73,8 +73,8 @@ module.exports = function(grunt) {
       raw = grunt.file.read(filename);
 
       while ((match = regex.exec(raw)) !== null) {
-
         if (match[2]) {
+          match[2] = match[2].replace(/\*\/|-->/, '');
           match[2] = match[2].trim();
         }
 
