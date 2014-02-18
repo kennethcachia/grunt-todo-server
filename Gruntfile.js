@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         '<%= nodeunit.tests %>'
       ],
       staticJs: [
-        'static/src/*.js'
+        'tasks/static/src/*.js'
       ]
     },
 
@@ -33,8 +33,8 @@ module.exports = function (grunt) {
         banner: '/* grunt-todo-server\n   <%= pkg.homepage %>\n   v<%=pkg.version %> */\n\n'
       },
       staticJs: {
-        src: 'static/src/*.js',
-        dest: 'static/scripts.min.js'
+        src: 'tasks/static/src/*.js',
+        dest: 'tasks/static/scripts.min.js'
       }
     },
 
@@ -63,9 +63,9 @@ module.exports = function (grunt) {
     watch: {
       staticFiles: {
         files: [
-          'static/src/*.js',
-          'static/themes/*.css',
-          'static/*.html'
+          'tasks/static/src/*.js',
+          'tasks/static/themes/*.css',
+          'tasks/static/*.html'
         ],
         tasks: ['jshint:staticJs', 'uglify:staticJs', 'test']
       },

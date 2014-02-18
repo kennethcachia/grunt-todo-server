@@ -95,10 +95,14 @@ module.exports = function(grunt) {
     var output = 'var TODO_DATA = ' + JSON.stringify(todos) + ';';
     grunt.file.write(options.output + '/todos.js', output);
 
+    // Get path to /static
+    var path = require('path');
+    var base = path.join.bind(null, __dirname);
+
     // Copy static files
-    grunt.file.copy('static/index.html', options.output + '/index.html');
-    grunt.file.copy('static/scripts.min.js', options.output + '/scripts.min.js');
-    grunt.file.copy('static/normalize.css', options.output + '/normalize.css');
-    grunt.file.copy('static/themes/default.css', options.output + '/theme.css');
+    grunt.file.copy(base('static/index.html'), options.output + '/index.html');
+    grunt.file.copy(base('static/scripts.min.js'), options.output + '/scripts.min.js');
+    grunt.file.copy(base('static/normalize.css'), options.output + '/normalize.css');
+    grunt.file.copy(base('static/themes/default.css'), options.output + '/theme.css');
   });
 };
