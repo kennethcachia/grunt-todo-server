@@ -10,7 +10,12 @@
 
 module.exports = function(grunt) {
 
+  /**
+   * Start server and serve
+   * static files and todo data
+   */
   grunt.registerTask('todo_server_start', 'Grunt todo server - Start server', function () {
+
     var options = this.options({
       port: 9000,
       hostname: 'localhost',
@@ -51,21 +56,25 @@ module.exports = function(grunt) {
   });
 
 
+  /**
+   * Extract todo data
+   * from all files
+   */
   grunt.registerMultiTask('todo_server_extract', 'Grunt todo server - Extract todos', function () {
-    var src = this.data.src;
 
     var options = this.options({
       output: 'todo_server'
     });
 
+    var regex = /(TODO):(.*)/ig;
+    var todos = {};
+    var filename;
     var match;
     var raw;
-    var todos = {};
     var key;
 
-    var regex = /(TODO):(.*)/ig;
 
-    src.forEach(function (filename) {
+    this.filesSrc.forEach(function (filename) {
 
       if (grunt.file.exists(filename)) {
         grunt.log.write('Processing "' + filename + '" - ');
@@ -97,7 +106,7 @@ module.exports = function(grunt) {
       }
     });
 
-    // Generate todos
+    // Generate todo data
     var output = 'var TODO_DATA = ' + JSON.stringify(todos) + ';';
     grunt.file.write(options.output + '/todos.js', output);
 
