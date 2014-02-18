@@ -27,6 +27,14 @@ module.exports = function(grunt) {
 
     server.listen(options.port, options.hostname);
 
+    server.on('error', function (e) {
+      if (e.code === 'EADDRINUSE') {
+        grunt.fatal('Port ' + options.port + ' is already in use by another process');
+      } else {
+        grunt.fatal(e);
+      }
+    });
+
     server.on('listening', function () {
       var address = server.address();
       var hostname = options.hostname || address.address || 'localhost';
@@ -39,16 +47,7 @@ module.exports = function(grunt) {
       }
     });
 
-    server.on('error', function (err) {
-      if (err.code === 'EADDRINUSE') {
-        grunt.fatal('Port ' + options.port + ' is already in use by another process');
-      } else {
-        grunt.fatal(err);
-      }
-    });
-
     this.async();
-    app.listen(options.port);
   });
 
 
