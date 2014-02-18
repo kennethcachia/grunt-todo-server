@@ -1,1 +1,0 @@
-var TODO_DATA = {"test/fixtures/scripts.js":[{"raw":"TODO: Test","prefix":"todo","comment":"Test"},{"raw":"TODO: Test 2","prefix":"todo","comment":"Test 2"}]};

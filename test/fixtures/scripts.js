@@ -1,13 +1,10 @@
 
-var a = 1;
-var b = 2;
-var c = 3;
+// TODO: Todo-1
 
-// TODO: Test
+// TODO: Todo-2
 
-function foo() {
-  console.log(a);
-}
+/**
+ * TODO: Todo-3
+ */
 
-// TODO: Test 2
-function bar() { }
+/* TODO: Todo-4 */
