@@ -7,7 +7,8 @@ var TEMPLATES = {
   item: '<div class="todo-item">' +
            '<span class="todo-item-type">{prefix}</span>' +
            '<span class="todo-item-comment">{comment}' +
-         '</div>'
+         '</div>',
+  done: '<div class="todo-done">{msg}</div>'
 };
 
 
@@ -89,6 +90,7 @@ Todo.prototype = {
 
     for (var f in this._data) {
       data = this._data[f];
+
       file = this._renderView({ name: f }, TEMPLATES.file);
       parent = file._node.querySelector('.todo-items');
 
@@ -96,6 +98,25 @@ Todo.prototype = {
         this._renderView(data[t], TEMPLATES.item, parent);
       }
     }
+
+    if (this._wrapper.children.length === 0) {
+      var msg = this._randomCompleteMessage();
+      this._renderView({ msg: msg }, TEMPLATES.done);
+    }
+  },
+
+
+  _randomCompleteMessage: function () {
+    var msgs = [
+      'Ready',
+      'All tasks are complete.',
+      'No outstanding tasks.'
+    ];
+
+    var max = msgs.length;
+    var index = Math.floor(Math.random() * max);
+
+    return msgs[index];
   },
 
 
@@ -108,9 +129,7 @@ Todo.prototype = {
   },
 
 
-  _bind: function () {
-
-  }
+  _bind: function () { }
 };
 
 

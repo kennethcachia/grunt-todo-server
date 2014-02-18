@@ -53,3 +53,12 @@ body {
   vertical-align: middle;
   line-height: 1em;
 }
+
+
+/**
+ * Done
+ */
+.todo-done {
+  text-align: center;
+  padding: 2.5em 0;
+}

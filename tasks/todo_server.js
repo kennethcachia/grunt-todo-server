@@ -85,6 +85,10 @@ module.exports = function(grunt) {
         });
       }
 
+      if (key.length === 0) {
+        delete todos[filename];
+      }
+
       grunt.log.ok();
     });
 
