@@ -1,3 +1,55 @@
 
+body {
+  font-family: helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5em;
+  padding: 0 20px;
+  background: #eee;
+  color: #333;
+}
+
+
+/**
+ * Main Wrapper
+ */
 .todo {
+  padding: 1.5em 1em;
+  background: #fff;
+  max-width: 500px;
+  margin: 5em auto;
+}
+
+
+/**
+ * Files
+ */
+.todo-file:not(:first-of-type) {
+  margin-top: 2em;
+}
+
+.todo-filename {
+  display: block;
+  border-bottom: 2px solid #eee;
+  margin-bottom: .5em;
+  color: #ccc;
+}
+
+
+/**
+ * Item
+ */
+.todo-item-type {
+  vertical-align: middle;
+  font-size: 9px;
+  text-transform: uppercase;
+  margin-right: .75em;
+  padding: 2px 4px;
+  background: #a8dba8;
+  border-radius: 2px;
+  color: #3b8686;
+}
+
+.todo-item-comment {
+  vertical-align: middle;
+  line-height: 1em;
 }
