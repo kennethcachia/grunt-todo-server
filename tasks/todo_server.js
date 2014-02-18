@@ -95,6 +95,7 @@ module.exports = function(grunt) {
     // Copy static files
     grunt.file.copy('static/index.html', options.output + '/index.html');
     grunt.file.copy('static/scripts.min.js', options.output + '/scripts.min.js');
+    grunt.file.copy('static/normalize.css', options.output + '/normalize.css');
     grunt.file.copy('static/themes/default.css', options.output + '/theme.css');
   });
 };
