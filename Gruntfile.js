@@ -62,7 +62,11 @@ module.exports = function (grunt) {
 
     watch: {
       staticFiles: {
-        files: ['static/src/*.js'],
+        files: [
+          'static/src/*.js',
+          'static/themes/*.css',
+          'static/*.html'
+        ],
         tasks: ['jshint:staticJs', 'uglify:staticJs', 'test']
       },
       task: {
