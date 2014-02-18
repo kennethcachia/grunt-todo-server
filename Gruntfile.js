@@ -68,6 +68,10 @@ module.exports = function (grunt) {
       task: {
         files: ['tasks/todo_server.js'],
         tasks: ['test']
+      },
+      tests: {
+        files: ['test/*.*'],
+        tasks: ['test']
       }
     }
   });
