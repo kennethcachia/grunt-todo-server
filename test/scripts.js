@@ -10,7 +10,7 @@ exports.todo_server = {
   scripts: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('server/todos.js');
+    var actual = grunt.file.read('todo_server/todos.js');
     var expected = grunt.file.read('test/expected/scripts.js');
 
     test.equal(actual, expected, 'the extracted todos should match');
