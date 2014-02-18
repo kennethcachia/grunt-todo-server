@@ -27,7 +27,6 @@ View.prototype = {
     container.innerHTML = compiled;
     this._node = container.children[0];
 
-    // TODO: check parent: View vs Element
     parent.appendChild(this._node);
   },
 
