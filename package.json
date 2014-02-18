@@ -1,6 +1,6 @@
 {
   "name": "grunt-todo-server",
-  "description": "Grunt todo server.",
+  "description": "Extract TODOs from source files and display them using a web server.",
   "version": "0.1.0",
   "homepage": "https://github.com/kennethcachia/grunt-todo-server",
   "author": {
