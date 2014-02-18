@@ -60,6 +60,10 @@ module.exports = function (grunt) {
       staticFiles: {
         files: ['static/src/*.js'],
         tasks: ['jshint:staticJs', 'uglify:staticJs', 'test']
+      },
+      task: {
+        files: ['tasks/todo_server.js'],
+        tasks: ['test']
       }
     }
   });
