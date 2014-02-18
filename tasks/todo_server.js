@@ -73,6 +73,11 @@ module.exports = function(grunt) {
       raw = grunt.file.read(filename);
 
       while ((match = regex.exec(raw)) !== null) {
+
+        if (match[2]) {
+          match[2] = match[2].trim()
+        }
+
         key.push({
           raw: match[0],
           prefix: match[1].toLowerCase(),
