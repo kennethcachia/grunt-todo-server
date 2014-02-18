@@ -35,11 +35,11 @@ grunt.initConfig({
 
 ### Options
 
-#### options.output
+#### options.folder
 Type: `String`
 Default value: `todo_server`
 
-The folder used by `todo_server_extract` when generating static files and todo data.
+The folder used when generating static files and todo data.
 
 ## The "todo_server_start" task
 In your project's Gruntfile, add a section named `todo_server_start` to the data object passed into `grunt.initConfig()`.
@@ -74,7 +74,7 @@ Default value: `false`
 
 Opens a new page in your browser when the webserver is ready.
 
-### options.output
+### options.folder
 Type: `String`
 Default value: `todo_server`
 

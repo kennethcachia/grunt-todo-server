@@ -20,11 +20,11 @@ module.exports = function(grunt) {
       port: 9000,
       hostname: 'localhost',
       open: false,
-      output: 'todo_server'
+      folder: 'todo_server'
     });
 
     var connect = require('connect');
-    var middleware = [connect.static(options.output)];
+    var middleware = [connect.static(options.folder)];
     var app = connect.apply(null, middleware);
     var http = require('http');
     var server = http.createServer(app);
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('todo_server_extract', 'Grunt todo server - Extract todos', function () {
 
     var options = this.options({
-      output: 'todo_server'
+      folder: 'todo_server'
     });
 
     var regex = /(TODO):(.*)/ig;
@@ -108,16 +108,16 @@ module.exports = function(grunt) {
 
     // Generate todo data
     var output = 'var TODO_DATA = ' + JSON.stringify(todos) + ';';
-    grunt.file.write(options.output + '/todos.js', output);
+    grunt.file.write(options.folder + '/todos.js', output);
 
     // Get path to /static
     var path = require('path');
     var base = path.join.bind(null, __dirname);
 
     // Copy static files
-    grunt.file.copy(base('static/index.html'), options.output + '/index.html');
-    grunt.file.copy(base('static/scripts.min.js'), options.output + '/scripts.min.js');
-    grunt.file.copy(base('static/normalize.css'), options.output + '/normalize.css');
-    grunt.file.copy(base('static/themes/default.css'), options.output + '/theme.css');
+    grunt.file.copy(base('static/index.html'), options.folder + '/index.html');
+    grunt.file.copy(base('static/scripts.min.js'), options.folder + '/scripts.min.js');
+    grunt.file.copy(base('static/normalize.css'), options.folder + '/normalize.css');
+    grunt.file.copy(base('static/themes/default.css'), options.folder + '/theme.css');
   });
 };
