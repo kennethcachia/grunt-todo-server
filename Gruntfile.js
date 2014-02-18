@@ -39,7 +39,7 @@ module.exports = function (grunt) {
     },
 
     clean: {
-      output: ['server']
+      folder: ['todo_server']
     },
 
     todo_server_start: {
