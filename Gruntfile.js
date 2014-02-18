@@ -47,7 +47,7 @@ module.exports = function (grunt) {
     },
 
     todo_server_extract: {
-      all: {
+      files: {
         src: [
           'test/fixtures/scripts.js',
           'test/fixtures/styles.css',

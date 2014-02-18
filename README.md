@@ -17,14 +17,12 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-todo-server');
 ```
 
-## The "todo_server" task
-
-### Overview
-In your project's Gruntfile, add a section named `todo_server` to the data object passed into `grunt.initConfig()`.
+## The "todo_server_extract" task
+In your project's Gruntfile, add a section named `todo_server_extract` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  todo_server: {
+  todo_server_extract: {
     options: {
       // Task-specific options go here.
     },
@@ -37,53 +35,82 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.output
 Type: `String`
-Default value: `',  '`
+Default value: `todo_server`
 
-A string value that is used to do something with whatever.
+The folder used by `todo_server_extract` when generating static files and todo data.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+## The "todo_server_start" task
+In your project's Gruntfile, add a section named `todo_server_start` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  todo_server: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+  todo_server_start: {
+    options: {
+      // Task-specific options go here.
+    }
   },
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+### Options
+
+#### options.hostname
+Type: `String`
+Default value: `localhost`
+
+The hostname used by the webserver.
+
+#### options.port
+Type: `Integer`
+Default value: `9000`
+
+The port used by the webserver. The task will fail if the specified port is already in use.
+
+### options.open
+Type: `Boolean`
+Default value: `false`
+
+Opens a new page in your browser when the webserver is ready.
+
+### options.output
+Type: `String`
+Default value: `todo_server`
+
+The folder used by the webserver.
+
+## Examples
+
+#### Default Options
+In this example, `todo_server_extract` will parse all the files in `src/*.*` and outputs todo data and static files to `todo_server`. You can then use `todo_server_start` to start a webserver and access this data at `http://localhost:9000`.
 
 ```js
 grunt.initConfig({
-  todo_server: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
+  todo_server_start: { },
+  
+  todo_server_extract: {
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+      src: [
+        'styles/*.css',
+        'scripts/*.js'
+      ]
+    }
+  }
 });
 ```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+
+## Todo
+- Simplify options, merge tasks(?)
+- Add an option to control the regex used during extraction
+- Refresh the page automatically when `todo_server_extract` finishes
+- Polish UI
+- Improve default theme
+- Add more themes
+- Tests
 
 ## Release History
 _(Nothing yet)_
