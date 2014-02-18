@@ -75,7 +75,7 @@ module.exports = function(grunt) {
       while ((match = regex.exec(raw)) !== null) {
 
         if (match[2]) {
-          match[2] = match[2].trim()
+          match[2] = match[2].trim();
         }
 
         key.push({
