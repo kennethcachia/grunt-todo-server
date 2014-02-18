@@ -66,29 +66,35 @@ module.exports = function(grunt) {
     var regex = /(TODO):(.*)/ig;
 
     src.forEach(function (filename) {
-      grunt.log.write('\nProcessing ' + filename + ' - ');
 
-      key = todos[filename] = [];
-      raw = grunt.file.read(filename);
+      if (grunt.file.exists(filename)) {
+        grunt.log.write('Processing "' + filename + '" - ');
 
-      while ((match = regex.exec(raw)) !== null) {
-        if (match[2]) {
-          match[2] = match[2].replace(/\*\/|-->/, '');
-          match[2] = match[2].trim();
+        key = todos[filename] = [];
+        raw = grunt.file.read(filename);
+
+        while ((match = regex.exec(raw)) !== null) {
+          if (match[2]) {
+            match[2] = match[2].replace(/\*\/|-->/, '');
+            match[2] = match[2].trim();
+          }
+
+          key.push({
+            raw: match[0],
+            prefix: match[1].toLowerCase(),
+            comment: match[2]
+          });
         }
 
-        key.push({
-          raw: match[0],
-          prefix: match[1].toLowerCase(),
-          comment: match[2]
-        });
-      }
+        if (key.length === 0) {
+          delete todos[filename];
+        }
 
-      if (key.length === 0) {
-        delete todos[filename];
-      }
+        grunt.log.ok();
 
-      grunt.log.ok();
+      } else {
+        grunt.log.warn('Skipping "' + filename + '" - File not found');
+      }
     });
 
     // Generate todos
