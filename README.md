@@ -1,6 +1,9 @@
+
 # grunt-todo-server
 
 > Grunt todo server.
+
+
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -16,6 +19,8 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ```js
 grunt.loadNpmTasks('grunt-todo-server');
 ```
+
+
 
 ## The "todo_server_extract" task
 In your project's Gruntfile, add a section named `todo_server_extract` to the data object passed into `grunt.initConfig()`.
@@ -40,6 +45,8 @@ Type: `String`
 Default value: `todo_server`
 
 The folder used when generating static files and todo data.
+
+
 
 ## The "todo_server_start" task
 In your project's Gruntfile, add a section named `todo_server_start` to the data object passed into `grunt.initConfig()`.
@@ -80,6 +87,8 @@ Default value: `todo_server`
 
 The folder used by the webserver.
 
+
+
 ## Examples
 
 #### Default Options
@@ -100,10 +109,15 @@ grunt.initConfig({
 });
 ```
 
+
 ## Contributing
+
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+
+
 ## Todo
+
 - Simplify options, merge tasks(?)
 - Add an option to control the regex used during extraction
 - Refresh the page automatically when `todo_server_extract` finishes
@@ -112,5 +126,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 - Add more themes
 - Tests
 
+
+
 ## Release History
-_(Nothing yet)_
+
+* 2014-01-18   v0.1.0   Initial release.
