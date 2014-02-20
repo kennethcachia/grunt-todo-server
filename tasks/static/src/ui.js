@@ -1,17 +1,9 @@
 
-var TEMPLATES = {
-  file: '<div class="todo-file">' +
-          '<span class="todo-filename">{name}</span>' +
-          '<div class="todo-items"></div>' +
-        '</div>',
-  item: '<div class="todo-item">' +
-           '<span class="todo-item-type">{prefix}</span>' +
-           '<span class="todo-item-comment">{comment}' +
-         '</div>',
-  done: '<div class="todo-done">{msg}</div>'
-};
-
-
+/**
+ * View
+ * @param {Object} data
+ * @param {String} template
+ */
 var View = function (data, template) {
   this._data = data;
   this._template = template;
@@ -63,8 +55,14 @@ View.prototype = {
 };
 
 
-var Todo = function () {
-  this._data = window.TODO_DATA;
+/**
+ * Todo
+ * @param {Object} templates
+ * @param {Object} data
+ */
+var Todo = function (templates, data) {
+  this._templates = templates;
+  this._data = data;
 
   if (!this._data) {
     throw 'Todo data not available';
@@ -91,19 +89,22 @@ Todo.prototype = {
     for (var f in this._data) {
       data = this._data[f];
 
-      file = this._renderView({ name: f }, TEMPLATES.file);
+      file = this._renderView({ name: f }, this._templates.file);
       parent = file._node.querySelector('.todo-items');
 
       for (var t = 0; t < data.length; t++) {
-        this._renderView(data[t], TEMPLATES.item, parent);
+        this._renderView(data[t], this._templates.item, parent);
       }
     }
 
     if (this._wrapper.children.length === 0) {
       var msg = this._randomCompleteMessage();
-      this._renderView({ msg: msg }, TEMPLATES.done);
+      this._renderView({ msg: msg }, this._templates.done);
     }
   },
+
+
+  _bind: function () { },
 
 
   _randomCompleteMessage: function () {
@@ -126,13 +127,27 @@ Todo.prototype = {
 
     view.render(parent);
     return view;
-  },
-
-
-  _bind: function () { }
+  }
 };
 
 
+/**
+ * Launch UI
+ */
 document.addEventListener('DOMContentLoaded', function () {
-  new Todo();
+
+  var templates = {
+    file: '<div class="todo-file">' +
+            '<span class="todo-filename">{name}</span>' +
+            '<div class="todo-items"></div>' +
+          '</div>',
+    item: '<div class="todo-item">' +
+             '<span class="todo-item-type">{prefix}</span>' +
+             '<span class="todo-item-comment">{comment}' +
+           '</div>',
+    done: '<div class="todo-done">{msg}</div>'
+  };
+
+  new Todo(templates, window.TODO_DATA);
+
 });
